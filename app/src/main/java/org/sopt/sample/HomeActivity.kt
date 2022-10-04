@@ -2,6 +2,7 @@ package org.sopt.sample
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import org.sopt.sample.databinding.ActivityHomeBinding
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var binding : ActivityHomeBinding
