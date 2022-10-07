@@ -12,9 +12,9 @@ import org.sopt.sample.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-    private var id = ""
-    private var pw = ""
-    private var mbti = ""
+    private lateinit var id : String
+    private lateinit var pw : String
+    private lateinit var mbti : String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)//조상클래스에 있는 oncreate 함수 호출
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -22,47 +22,49 @@ class MainActivity : AppCompatActivity() {
         //binding.txtMainIdTitle.text = "Hello World!"
 
         resultLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()){
-                result -> if(result.resultCode == RESULT_OK){
-            id = result.data?.getStringExtra("id").toString()
-            pw = result.data?.getStringExtra("pw").toString()
-            mbti = result.data?.getStringExtra("mbti").toString()
-            Snackbar.make(binding.root, "회원가입이 완료되었다", Snackbar.LENGTH_SHORT).show()
-        }
+            ActivityResultContracts.StartActivityForResult()
+        ) { result ->
+            if (result.resultCode == RESULT_OK) {
+                id = result.data?.getStringExtra("id").toString()
+                pw = result.data?.getStringExtra("pw").toString()
+                mbti = result.data?.getStringExtra("mbti").toString()
+                Snackbar.make(binding.root, "회원가입이 완료되었습니다", Snackbar.LENGTH_SHORT).show()
+            }
         }
         init()
 
     }
 
-    fun init(){
+    fun init() {
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
         binding.btnLogin.setOnClickListener {
 
-            if(binding.etId.text.length < 6 || binding.etId.text.length > 10){
-                Snackbar.make(binding.root, "아이디가 잘못되었습니다", Snackbar.LENGTH_SHORT).setAnchorView(binding.etPw).show()
+            if (binding.etId.text.length < 6 || binding.etId.text.length > 10) {
+                Snackbar.make(binding.root, getString(R.string.main_error_1), Snackbar.LENGTH_SHORT)
+                    .setAnchorView(binding.etPw).show()
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 val len = binding.etPw.text.length
-                if(len < 8 || len > 12){
-                    Snackbar.make(binding.root, "패스워드가 잘못 되었습니다", Snackbar.LENGTH_SHORT).setAnchorView(binding.etPw).show()
+                if (len < 8 || len > 12) {
+                    Snackbar.make(binding.root, getString(R.string.main_error_2), Snackbar.LENGTH_SHORT)
+                        .setAnchorView(binding.etPw).show()
                     return@setOnClickListener
                 }
             }
 
-            if(id == binding.etId.text.toString() && pw == binding.etPw.text.toString()){//로그인 성공
-                Toast.makeText(this, "로그인에 성공했습니다", Toast.LENGTH_SHORT).show()
-                val intent = Intent(this, HomeActivity::class.java)
-                intent.putExtra("id", id)
-                intent.putExtra("pw", pw)
-                intent.putExtra("mbti", mbti)
+            if (id == binding.etId.text.toString() && pw == binding.etPw.text.toString()) {//로그인 성공
+                Toast.makeText(this, R.string.main_txt_1, Toast.LENGTH_SHORT).show()
+                val intent = Intent(this, HomeActivity::class.java).apply {
+                    putExtra("id", id)
+                    putExtra("pw", pw)
+                    putExtra("mbti", mbti)
+                }
+
                 startActivity(intent)
             }
-//            val intent = Intent(this, SampleActivity::class.java)
-//            startActivity(intent)
 
         }
     }

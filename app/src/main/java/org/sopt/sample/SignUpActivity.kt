@@ -19,13 +19,13 @@ class SignUpActivity : AppCompatActivity() {
     }
     fun init(){
         binding.btnSignupFinish.setOnClickListener {
-            if(binding.etId.text.length < 6 || binding.etId.text.length > 10){
+            if(binding.etId.text.length !in 6..10){
                 Snackbar.make(binding.root, "아이디가 잘못되었습니다", Snackbar.LENGTH_SHORT).setAnchorView(binding.etPw).show()
                 return@setOnClickListener
             }
             else{
                 val len = binding.etPw.text.length
-                if(len < 8 || len > 12) {
+                if(len !in 8..12) {
                     Snackbar.make(binding.root, "패스워드가 잘못 되었습니다", Snackbar.LENGTH_SHORT)
                         .setAnchorView(binding.etPw).show()
                     return@setOnClickListener
