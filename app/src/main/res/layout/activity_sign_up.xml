@@ -11,22 +11,22 @@
         android:id="@+id/txt_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to SOPT"
-        android:textStyle="bold"
+        android:layout_marginTop="40dp"
+        android:text="@string/signup_title"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="40dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/txt_id_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="ID"
-        android:textStyle="bold"
-        android:layout_marginTop="24dp"
         android:layout_marginStart="40dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/id"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_signup" />
 
@@ -34,19 +34,20 @@
         android:id="@+id/et_id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="아이디를 입력하세요"
-        android:layout_marginTop="20dp"
         android:layout_marginHorizontal="40dp"
-        app:layout_constraintTop_toBottomOf="@+id/txt_id_title" />
+        android:layout_marginTop="20dp"
+        android:hint="@string/hint_id"
+        app:layout_constraintTop_toBottomOf="@+id/txt_id_title"
+        tools:layout_editor_absoluteX="40dp" />
 
     <TextView
         android:id="@+id/txt_pw_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="비밀번호"
-        android:textStyle="bold"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="40dp"
+        android:layout_marginTop="40dp"
+        android:text="@string/pw"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_id" />
 
@@ -56,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="비밀번호를 입력하세요"
+        android:hint="@string/hint_pw"
         android:inputType="textPassword"
         app:layout_constraintTop_toBottomOf="@+id/txt_pw_title"
         tools:layout_editor_absoluteX="40dp" />
@@ -65,9 +66,9 @@
         android:id="@+id/txt_mbti"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginStart="40dp"
-        android:text="MBTI"
+        android:layout_marginTop="40dp"
+        android:text="@string/mbti"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_pw" />
@@ -78,8 +79,9 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="MBTI를 입력하세요"
-        app:layout_constraintTop_toBottomOf="@+id/txt_mbti" />
+        android:hint="@string/hint_mbti"
+        app:layout_constraintTop_toBottomOf="@+id/txt_mbti"
+        tools:layout_editor_absoluteX="40dp" />
 
     <Button
         android:id="@+id/btn_signup_finish"
@@ -87,7 +89,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:text="회원가입 완료"
+        android:text="@string/signup_finish"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_mbti" />
