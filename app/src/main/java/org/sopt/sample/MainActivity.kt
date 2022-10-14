@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)//조상클래스에 있는 oncreate 함수 호출
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)//findviewbyid로 접근해야 되는데
-        //binding.txtMainIdTitle.text = "Hello World!"
 
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()

@@ -44,6 +44,24 @@ class HomeFragment : Fragment() {
             name = "FILL-IN",
             author = "Yubeen-park",
             type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
         )
     )
 
