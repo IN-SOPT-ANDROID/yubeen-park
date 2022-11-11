@@ -8,7 +8,7 @@ import org.sopt.sample.databinding.ActivitySignUpBinding
 
 class SignUpActivity : AppCompatActivity() {
 
-    private lateinit var binding : ActivitySignUpBinding
+    private lateinit var binding: ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -17,16 +17,25 @@ class SignUpActivity : AppCompatActivity() {
         init()
 
     }
-    fun init(){
+
+    fun init() {
         binding.btnSignupFinish.setOnClickListener {
-            if(binding.etId.text.length !in 6..10){
-                Snackbar.make(binding.root, "아이디가 잘못되었습니다", Snackbar.LENGTH_SHORT).setAnchorView(binding.etPw).show()
+            if (binding.etId.text.length !in 6..10) {
+                Snackbar.make(
+                    binding.root,
+                    getString(R.string.main_id_error),
+                    Snackbar.LENGTH_SHORT
+                )
+                    .setAnchorView(binding.etPw).show()
                 return@setOnClickListener
-            }
-            else{
+            } else {
                 val len = binding.etPw.text.length
-                if(len !in 8..12) {
-                    Snackbar.make(binding.root, "패스워드가 잘못 되었습니다", Snackbar.LENGTH_SHORT)
+                if (len !in 8..12) {
+                    Snackbar.make(
+                        binding.root,
+                        getString(R.string.main_pw_error),
+                        Snackbar.LENGTH_SHORT
+                    )
                         .setAnchorView(binding.etPw).show()
                     return@setOnClickListener
                 }
@@ -38,7 +47,7 @@ class SignUpActivity : AppCompatActivity() {
                 putExtra("mbti", binding.etMbti.text.toString())
             }
             setResult(RESULT_OK, intent)
-            if(!isFinishing) finish()
+            if (!isFinishing) finish()
 
         }
     }
