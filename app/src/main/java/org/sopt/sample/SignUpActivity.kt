@@ -1,16 +1,23 @@
 package org.sopt.sample
 
 import android.content.Intent
+import android.content.Intent.getIntent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.google.android.material.snackbar.Snackbar
+import android.widget.Toast
+import org.sopt.sample.data.remote.AuthService
+import org.sopt.sample.data.remote.RequestSignup
+import org.sopt.sample.data.remote.ResponseSignup
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.databinding.ActivitySignUpBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private val signUpService = ServicePool
+    private val signUpService = ServicePool.authService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignUpBinding.inflate(layoutInflater)
@@ -21,19 +28,30 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     fun initListener() {
-        binding.btnSignupFinish.isEnabled = binding.etId.length() > 0 && binding.etPw.length() > 0
+        //binding.btnSignupFinish.isEnabled = binding.etEmail.length() > 0 && binding.etPw.length() > 0
 
         binding.btnSignupFinish.setOnClickListener {
             //서버통신
+            signUpService.signup(
+                RequestSignup(
+                    binding.etEmail.text.toString(),
+                    binding.etPw.text.toString(),
+                    binding.etName.text.toString()
+                )
+            ).enqueue(object : Callback<ResponseSignup> {
+                override fun onResponse(
+                    call: Call<ResponseSignup>,
+                    response: Response<ResponseSignup>
+                ) {
+                    val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                    setResult(RESULT_OK, intent)
+                    startActivity(intent)
+                }
 
-            //회원가입 성공
-            val intent = Intent(this, MainActivity::class.java).apply {
-                putExtra("id", binding.etId.text.toString())
-                putExtra("pw", binding.etPw.text.toString())
-                putExtra("mbti", binding.etMbti.text.toString())
-            }
-            setResult(RESULT_OK, intent)
-            if (!isFinishing) finish()
+                override fun onFailure(call: Call<ResponseSignup>, t: Throwable) {
+                    Toast.makeText(this@SignUpActivity, "에러 발생", Toast.LENGTH_SHORT).show()
+                }
+            })
 
         }
     }

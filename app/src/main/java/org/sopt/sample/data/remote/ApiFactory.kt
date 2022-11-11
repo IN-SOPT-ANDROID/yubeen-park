@@ -8,10 +8,14 @@ import retrofit2.Retrofit
 object ApiFactory {
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http://3.39.169.52:3000")
+            .baseUrl("http://3.39.169.52:3000/")
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
 
     inline fun <reified T> create(): T = retrofit.create<T>(T::class.java)
+}
+
+object ServicePool{
+    val authService = ApiFactory.create<AuthService>()
 }

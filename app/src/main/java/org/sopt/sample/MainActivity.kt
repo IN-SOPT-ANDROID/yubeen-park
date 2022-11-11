@@ -12,9 +12,6 @@ import org.sopt.sample.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
-    private lateinit var id: String
-    private lateinit var pw: String
-    private lateinit var mbti: String
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)//조상클래스에 있는 oncreate 함수 호출
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -24,9 +21,6 @@ class MainActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                id = result.data?.getStringExtra("id").toString()
-                pw = result.data?.getStringExtra("pw").toString()
-                mbti = result.data?.getStringExtra("mbti").toString()
                 Snackbar.make(
                     binding.root,
                     getString(R.string.signup_finish),
@@ -34,49 +28,29 @@ class MainActivity : AppCompatActivity() {
                 ).show()
             }
         }
-        init()
+        initListener()
 
     }
 
-    fun init() {
+    fun initListener() {
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
         }
         binding.btnLogin.setOnClickListener {
 
-            if (binding.etId.text.length < 6 || binding.etId.text.length > 10) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.main_id_error),
-                    Snackbar.LENGTH_SHORT
-                )
-                    .setAnchorView(binding.etPw).show()
-                return@setOnClickListener
-            } else {
-                val len = binding.etPw.text.length
-                if (len < 8 || len > 12) {
-                    Snackbar.make(
-                        binding.root,
-                        getString(R.string.main_pw_error),
-                        Snackbar.LENGTH_SHORT
-                    )
-                        .setAnchorView(binding.etPw).show()
-                    return@setOnClickListener
-                }
-            }
 
-            if (id == binding.etId.text.toString() && pw == binding.etPw.text.toString()) {//로그인 성공
-                Toast.makeText(this, getString(R.string.main_login_success), Toast.LENGTH_SHORT)
-                    .show()
-                val intent = Intent(this, HomeActivity::class.java).apply {
-                    putExtra("id", id)
-                    putExtra("pw", pw)
-                    putExtra("mbti", mbti)
-                }
-
-                startActivity(intent)
-            }
+//            if (id == binding.etId.text.toString() && pw == binding.etPw.text.toString()) {//로그인 성공
+//                Toast.makeText(this, getString(R.string.main_login_success), Toast.LENGTH_SHORT)
+//                    .show()
+//                val intent = Intent(this, HomeActivity::class.java).apply {
+//                    putExtra("id", id)
+//                    putExtra("pw", pw)
+//                    putExtra("mbti", mbti)
+//                }
+//
+//                startActivity(intent)
+//            }
 
         }
     }

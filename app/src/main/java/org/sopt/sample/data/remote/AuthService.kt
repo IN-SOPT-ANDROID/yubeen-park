@@ -4,9 +4,9 @@ import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface ServicePool {
+interface AuthService {
     @POST("api/user/signup")
-    fun signupService(
+    fun signup(
         @Body request: RequestSignup
     ): Call<ResponseSignup>
 }
