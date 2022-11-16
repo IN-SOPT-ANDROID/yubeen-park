@@ -38,7 +38,15 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    fun initListener() {
+    private fun fail_login_toast() {
+        Toast.makeText(
+            this@LoginActivity,
+            getString(R.string.login_error),
+            Toast.LENGTH_SHORT
+        ).show()
+    }
+
+    private fun initListener() {
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
@@ -54,15 +62,22 @@ class LoginActivity : AppCompatActivity() {
                     call: Call<ResponseLogin>,
                     response: Response<ResponseLogin>
                 ) {
-                    binding.etEmail.text = null
-                    binding.etPw.text = null
-                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                    setResult(RESULT_OK, intent)
-                    startActivity(intent)
+                    if (response.isSuccessful) {
+                        binding.etEmail.text = null
+                        binding.etPw.text = null
+                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                        setResult(RESULT_OK, intent)
+                        startActivity(intent)
+                    } else {
+                        when (response.code()) {
+                            404 -> fail_login_toast()
+                        }
+                    }
+
                 }
 
                 override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                    Toast.makeText(this@LoginActivity, getString(R.string.login_error), Toast.LENGTH_SHORT).show()
+                    fail_login_toast()
                 }
             })
 
