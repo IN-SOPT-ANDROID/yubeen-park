@@ -1,11 +1,10 @@
 package org.sopt.sample
 
 import android.content.Intent
-import android.content.Intent.getIntent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
-import org.sopt.sample.data.remote.AuthService
 import org.sopt.sample.data.remote.RequestSignup
 import org.sopt.sample.data.remote.ResponseSignup
 import org.sopt.sample.data.remote.ServicePool
@@ -43,13 +42,15 @@ class SignUpActivity : AppCompatActivity() {
                     call: Call<ResponseSignup>,
                     response: Response<ResponseSignup>
                 ) {
-                    val intent = Intent(this@SignUpActivity, MainActivity::class.java)
+                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                     setResult(RESULT_OK, intent)
                     startActivity(intent)
                 }
 
                 override fun onFailure(call: Call<ResponseSignup>, t: Throwable) {
-                    Toast.makeText(this@SignUpActivity, "에러 발생", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SignUpActivity, "네트워크 에러", Toast.LENGTH_SHORT).show()
+                    Log.e("SIGNUP FAIL", "mes : " +t.message)
+
                 }
             })
 

@@ -9,4 +9,9 @@ interface AuthService {
     fun signup(
         @Body request: RequestSignup
     ): Call<ResponseSignup>
+
+    @POST("api/user/signin")
+    fun login(
+        @Body request: RequestLogin
+    ): Call<ResponseLogin>
 }
