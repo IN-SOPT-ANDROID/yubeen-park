@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.material.snackbar.Snackbar
+import org.sopt.sample.data.UserInfo
 import org.sopt.sample.data.remote.*
 import org.sopt.sample.databinding.ActivityLoginBinding
 import retrofit2.Call
@@ -66,7 +67,6 @@ class LoginActivity : AppCompatActivity() {
                         binding.etEmail.text = null
                         binding.etPw.text = null
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                        setResult(RESULT_OK, intent)
                         startActivity(intent)
                     } else {
                         when (response.code()) {
