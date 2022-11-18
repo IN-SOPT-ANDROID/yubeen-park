@@ -2,6 +2,7 @@ package org.sopt.sample
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
@@ -70,15 +71,14 @@ class LoginActivity : AppCompatActivity() {
                         val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                         startActivity(intent)
                     } else {
-                        when (response.code()) {
-                            404 -> fail_login_toast()
-                        }
+                        fail_login_toast()
                     }
 
                 }
 
                 override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
                     fail_login_toast()
+                    Log.e("SIGN IN FAIL", "mes : " + t.message)
                 }
             })
 
