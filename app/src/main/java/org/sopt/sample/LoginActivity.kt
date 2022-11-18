@@ -1,14 +1,15 @@
 package org.sopt.sample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.data.UserInfo
-import org.sopt.sample.data.remote.*
+import org.sopt.sample.data.remote.RequestLogin
+import org.sopt.sample.data.remote.ResponseLogin
+import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.databinding.ActivityLoginBinding
 import retrofit2.Call
 import retrofit2.Callback

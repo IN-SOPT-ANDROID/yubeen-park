@@ -1,12 +1,12 @@
 package org.sopt.sample
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import org.sopt.sample.data.remote.RequestSignup
 import org.sopt.sample.data.remote.ResponseSignup
 import org.sopt.sample.data.remote.ServicePool
@@ -85,16 +85,23 @@ class SignUpActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                         setResult(RESULT_OK, intent)
-                        if(!isFinishing) finish()
-                    }
-                    else{
-                        Toast.makeText(this@SignUpActivity, getString(R.string.signup_error), Toast.LENGTH_SHORT).show()
+                        if (!isFinishing) finish()
+                    } else {
+                        Toast.makeText(
+                            this@SignUpActivity,
+                            getString(R.string.signup_error),
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                 }
 
                 override fun onFailure(call: Call<ResponseSignup>, t: Throwable) {
-                    Toast.makeText(this@SignUpActivity, getString(R.string.network_error), Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@SignUpActivity,
+                        getString(R.string.network_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
                     Log.e("SIGNUP FAIL", "mes : " + t.message)
 
                 }

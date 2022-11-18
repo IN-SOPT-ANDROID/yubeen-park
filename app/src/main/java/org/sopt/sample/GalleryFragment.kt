@@ -1,17 +1,13 @@
 package org.sopt.sample
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.data.UserInfo
-import org.sopt.sample.data.remote.RequestLogin
-import org.sopt.sample.data.remote.ResponseLogin
 import org.sopt.sample.data.remote.ResponseUserList
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.databinding.FragmentGalleryBinding
@@ -27,7 +23,7 @@ class GalleryFragment : Fragment() {
         get() = requireNotNull(_binding)
 
     private lateinit var gridManager: GridLayoutManager
-    private lateinit var galleryAdapter : GalleryAdapter
+    private lateinit var galleryAdapter: GalleryAdapter
     private val userListService = ServicePool.userListService
     private var galleryList: MutableList<ResponseUserList.userListInfo> = mutableListOf()
 
@@ -79,7 +75,7 @@ class GalleryFragment : Fragment() {
 
     private fun initRecyclerView() {
         gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        galleryAdapter = GalleryAdapter(requireContext())
+        galleryAdapter = GalleryAdapter()
         binding.rvGallery.apply {
             layoutManager = gridManager
             adapter = galleryAdapter

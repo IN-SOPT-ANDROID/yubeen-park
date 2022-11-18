@@ -9,7 +9,7 @@ import org.sopt.sample.R
 import org.sopt.sample.data.remote.ResponseUserList
 import org.sopt.sample.databinding.LayoutGalleryRowBinding
 
-class GalleryAdapter(context: Context) : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
+class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
     private var user_items: List<ResponseUserList.userListInfo>? = null
 
     fun setItems(items: List<ResponseUserList.userListInfo>) {
