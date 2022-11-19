@@ -1,26 +1,23 @@
-package org.sopt.sample
+package org.sopt.sample.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.data.remote.RequestLogin
-import org.sopt.sample.data.remote.ResponseLogin
-import org.sopt.sample.data.remote.ServicePool
+import org.sopt.sample.HomeActivity
+import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivityLoginBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import org.sopt.sample.presentation.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
+    private val viewModel by viewModels<LoginViewModel>()
 
-    private val loginService = ServicePool.authService
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -41,10 +38,10 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun fail_login_toast() {
+    private fun fail_login_toast(errorMessage: String) {
         Toast.makeText(
             this@LoginActivity,
-            getString(R.string.login_error),
+            errorMessage,
             Toast.LENGTH_SHORT
         ).show()
     }
@@ -55,34 +52,22 @@ class LoginActivity : AppCompatActivity() {
             resultLauncher.launch(intent)
         }
         binding.btnLogin.setOnClickListener {
-            loginService.login(
-                RequestLogin(
-                    binding.etEmail.text.toString(),
-                    binding.etPw.text.toString()
-                )
-            ).enqueue(object : Callback<ResponseLogin> {
-                override fun onResponse(
-                    call: Call<ResponseLogin>,
-                    response: Response<ResponseLogin>
-                ) {
-                    if (response.isSuccessful) {
-                        binding.etEmail.text = null
-                        binding.etPw.text = null
-                        val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                        startActivity(intent)
-                    } else {
-                        fail_login_toast()
-                    }
+            viewModel.login(
+                binding.etEmail.text.toString(),
+                binding.etPw.text.toString()
+            )
+        }
 
-                }
+        //this->lifeCycleOwner, fragment면 뷰와 생명주기가 달라서->viewLifeCycleOwner제공
+        viewModel.loginResult.observe(this) {
+            if (it.status >= 200 && it.status < 300) {
+                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                startActivity(intent)
+            }
+        }
 
-                override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                    fail_login_toast()
-                    Log.e("SIGN IN FAIL", "mes : " + t.message)
-                }
-            })
-
-
+        viewModel.errorMessage.observe(this) {
+            fail_login_toast(it)
         }
     }
 }
