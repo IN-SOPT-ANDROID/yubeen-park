@@ -1,12 +1,9 @@
 package org.sopt.sample.presentation.login
 
-import android.content.Intent
 import android.util.Log
-import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.sopt.sample.HomeActivity
 import org.sopt.sample.data.remote.RequestLogin
 import org.sopt.sample.data.remote.ResponseLogin
 import org.sopt.sample.data.remote.ServicePool

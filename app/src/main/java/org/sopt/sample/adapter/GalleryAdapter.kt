@@ -9,10 +9,10 @@ import org.sopt.sample.data.remote.ResponseUserList
 import org.sopt.sample.databinding.LayoutGalleryRowBinding
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
-    private var user_items: List<ResponseUserList.userListInfo>? = null
+    private var userItems: List<ResponseUserList.userListInfo>? = emptyList()
 
     fun setItems(items: List<ResponseUserList.userListInfo>) {
-        this.user_items = items
+        this.userItems = items
         notifyDataSetChanged()
     }
 
@@ -27,10 +27,10 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() 
         }
     }
 
-    override fun getItemCount() = user_items?.size ?: 0
+    override fun getItemCount() = userItems?.size ?: 0
 
     override fun onBindViewHolder(holder: GalleryViewHolder, position: Int) {
-        user_items?.let {
+        userItems?.let {
             holder.bind(it[position])
         }
     }

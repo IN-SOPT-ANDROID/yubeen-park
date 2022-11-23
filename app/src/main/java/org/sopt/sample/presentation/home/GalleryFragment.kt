@@ -1,4 +1,4 @@
-package org.sopt.sample
+package org.sopt.sample.presentation.home
 
 import android.os.Bundle
 import android.util.Log
@@ -25,11 +25,6 @@ class GalleryFragment : Fragment() {
     private lateinit var gridManager: GridLayoutManager
     private lateinit var galleryAdapter: GalleryAdapter
     private val userListService = ServicePool.userListService
-    private var galleryList: MutableList<ResponseUserList.userListInfo> = mutableListOf()
-
-    companion object {
-        const val SPAN_COUNT = 2
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -53,14 +48,7 @@ class GalleryFragment : Fragment() {
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
-                        galleryList.clear()
-                        for (user in it.data) {
-                            galleryList.add(user)
-                            Log.i("userinfo", user.toString())
-                        }
-                        Log.i("body", it.toString())
-
-                        galleryAdapter.setItems(galleryList)
+                        galleryAdapter.setItems(it.data)
                     }
 
                 }
@@ -80,12 +68,15 @@ class GalleryFragment : Fragment() {
             layoutManager = gridManager
             adapter = galleryAdapter
         }
-        galleryAdapter.setItems(galleryList)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        const val SPAN_COUNT = 2
     }
 
 }

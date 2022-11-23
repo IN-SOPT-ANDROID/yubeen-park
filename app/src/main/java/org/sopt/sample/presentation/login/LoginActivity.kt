@@ -7,8 +7,9 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.HomeActivity
+import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.R
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.signup.SignUpActivity
@@ -20,8 +21,8 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
+
 
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
