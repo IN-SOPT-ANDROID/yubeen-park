@@ -29,39 +29,9 @@ class SignUpActivity : AppCompatActivity() {
 
     private fun initListener() {
         //모든 입력창에 입력값이 있는 경우에만 버튼 활성화
-        binding.etEmail.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                check_et_email = binding.etEmail.text.toString()
-                binding.btnSignupFinish.isEnabled =
-                    check_et_email.isNotEmpty() && check_et_name.isNotEmpty() && check_et_pw.isNotEmpty()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
-        })
-        binding.etName.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                check_et_name = binding.etName.text.toString()
-                binding.btnSignupFinish.isEnabled =
-                    check_et_email.isNotEmpty() && check_et_name.isNotEmpty() && check_et_pw.isNotEmpty()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
-        })
-        binding.etPw.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                check_et_pw = binding.etPw.text.toString()
-                binding.btnSignupFinish.isEnabled =
-                    check_et_email.isNotEmpty() && check_et_name.isNotEmpty() && check_et_pw.isNotEmpty()
-            }
-
-            override fun afterTextChanged(p0: Editable?) {}
-        })
+        binding.etEmail.addTextChangedListener(textWatcher)
+        binding.etName.addTextChangedListener(textWatcher)
+        binding.etPw.addTextChangedListener(textWatcher)
 
 
         //서버통신
@@ -91,5 +61,16 @@ class SignUpActivity : AppCompatActivity() {
             errorMessage,
             Toast.LENGTH_SHORT
         ).show()
+    }
+    private val textWatcher = object : TextWatcher{
+        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+
+        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+            check_et_pw = binding.etPw.text.toString()
+            binding.btnSignupFinish.isEnabled =
+                check_et_email.isNotEmpty() && check_et_name.isNotEmpty() && check_et_pw.isNotEmpty()
+        }
+
+        override fun afterTextChanged(p0: Editable?) {}
     }
 }

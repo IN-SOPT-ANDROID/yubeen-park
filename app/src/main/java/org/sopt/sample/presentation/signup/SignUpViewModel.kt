@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.sopt.sample.data.remote.RequestSignup
-import org.sopt.sample.data.remote.ResponseSignup
+import org.sopt.sample.data.remote.request.RequestSignup
+import org.sopt.sample.data.remote.response.ResponseSignup
 import org.sopt.sample.data.remote.ServicePool
 import retrofit2.Call
 import retrofit2.Callback
