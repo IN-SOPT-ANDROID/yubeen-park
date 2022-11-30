@@ -5,6 +5,8 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.sopt.sample.BuildConfig.LOGIN_BASE_URL
+import org.sopt.sample.BuildConfig.USERLIST_BASE_URL
 import retrofit2.Retrofit
 
 object ApiFactory {
@@ -18,7 +20,7 @@ object ApiFactory {
     }
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http://3.39.169.52:3000/")
+            .baseUrl(LOGIN_BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .client(client)
             .build()
@@ -26,7 +28,7 @@ object ApiFactory {
 
     val retrofitList: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("https://reqres.in/")
+            .baseUrl(USERLIST_BASE_URL)
             .addConverterFactory(Json.asConverterFactory("application/json".toMediaType()))
             .build()
     }
