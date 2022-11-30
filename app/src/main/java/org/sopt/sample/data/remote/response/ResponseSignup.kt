@@ -1,4 +1,4 @@
-package org.sopt.sample.data.remote
+package org.sopt.sample.data.remote.response
 
 import kotlinx.serialization.Serializable
 import org.sopt.sample.data.UserInfo
