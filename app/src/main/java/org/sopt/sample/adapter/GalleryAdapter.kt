@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.ResponseUserList
+import org.sopt.sample.data.remote.response.ResponseUserList
 import org.sopt.sample.databinding.LayoutGalleryRowBinding
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.data.remote.ResponseUserList
+import org.sopt.sample.data.remote.response.ResponseUserList
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.databinding.FragmentGalleryBinding
 import retrofit2.Call
