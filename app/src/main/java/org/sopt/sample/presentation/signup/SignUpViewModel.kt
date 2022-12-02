@@ -3,6 +3,7 @@ package org.sopt.sample.presentation.signup
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import org.sopt.sample.data.remote.AuthNetworkState
 import org.sopt.sample.data.remote.ServicePool
@@ -18,6 +19,16 @@ class SignUpViewModel : ViewModel() {
         get() = _signUpResult
 
     private val signUpService = ServicePool.authService
+
+    val userName = MutableLiveData<String>()
+    val userEmail = MutableLiveData<String>()
+    val userPassword = MutableLiveData<String>()
+
+    val emailFlag =
+        Transformations.map(userEmail) { email -> emailRegex(email) || email.isEmpty() }
+    val pwFlag =
+        Transformations.map(userPassword) { pw -> passwordRegex(pw) || pw.isEmpty() }
+
 
     fun signUp(email: String, pw: String, name: String) {
         signUpService.signup(
@@ -44,5 +55,11 @@ class SignUpViewModel : ViewModel() {
         })
     }
 
+    private fun emailRegex(email: String): Boolean {
+        return email.matches("^(?=.*[a-z])(?=.*[0-9])[0-9A-Za-z$&+?@#<>^*%!]{6,10}$".toRegex())
+    }
 
+    private fun passwordRegex(password: String): Boolean {
+        return password.matches("^(?=.*[a-z])(?=.*[0-9])(?=.*[$&+?@#<>^*%!])[0-9A-Za-z$&+?@#<>^*%!]{6,12}$".toRegex())
+    }
 }
