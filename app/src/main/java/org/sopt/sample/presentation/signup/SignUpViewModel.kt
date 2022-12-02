@@ -20,9 +20,10 @@ class SignUpViewModel : ViewModel() {
 
     private val signUpService = ServicePool.authService
 
-    val userName = MutableLiveData<String>()
-    val userEmail = MutableLiveData<String>()
-    val userPassword = MutableLiveData<String>()
+    val userName = MutableLiveData<String>("")
+    val userEmail = MutableLiveData<String>("")
+    val userPassword = MutableLiveData<String>("")
+
 
     val emailFlag =
         Transformations.map(userEmail) { email -> emailRegex(email) || email.isEmpty() }

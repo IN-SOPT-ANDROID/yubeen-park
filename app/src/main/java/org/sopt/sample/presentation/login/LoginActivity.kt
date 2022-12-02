@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
@@ -37,7 +38,9 @@ class LoginActivity : AppCompatActivity() {
             binding.root,
             errorMessage,
             Snackbar.LENGTH_SHORT
-        ).show()
+        ).apply {
+            anchorView = binding.etPw
+        }.show()
     }
 
     private fun initListener() {

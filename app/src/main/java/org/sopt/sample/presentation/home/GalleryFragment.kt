@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import org.sopt.sample.R
 import org.sopt.sample.adapter.GalleryAdapter
+import org.sopt.sample.adapter.RepoAdapter
+import org.sopt.sample.data.Repo
 import org.sopt.sample.data.remote.response.ResponseUser
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.databinding.FragmentGalleryBinding
+import org.sopt.sample.databinding.FragmentHomeBinding
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,12 +26,61 @@ class GalleryFragment : Fragment() {
     private val binding: FragmentGalleryBinding
         get() = requireNotNull(_binding)
 
-    private lateinit var gridManager: GridLayoutManager
-    private lateinit var galleryAdapter: GalleryAdapter
-    private val userListService = ServicePool.userListService
+
+    private val mockRepoList = listOf<Repo>(
+        Repo(
+            image = 0,
+            name = "Yubeen's Repository",
+            author = "",
+            type = Repo.TEXT_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        ),
+        Repo(
+            image = R.drawable.github,
+            name = "FILL-IN",
+            author = "Yubeen-park",
+            type = Repo.REPO_TYPE
+        )
+    )
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
@@ -36,47 +89,14 @@ class GalleryFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initRecyclerView()
-        initUserInfo()
-    }
-
-    private fun initUserInfo() {
-        userListService.getUserList().enqueue(object : Callback<ResponseUser> {
-            override fun onResponse(
-                call: Call<ResponseUser>,
-                response: Response<ResponseUser>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        galleryAdapter.setItems(it.data)
-                    }
-
-                }
-
-            }
-
-            override fun onFailure(call: Call<ResponseUser>, t: Throwable) {
-                Log.e("Gallery FAIL", "mes : " + t.message)
-            }
-        })
-    }
-
-    private fun initRecyclerView() {
-        gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        galleryAdapter = GalleryAdapter()
-        binding.rvGallery.apply {
-            layoutManager = gridManager
-            adapter = galleryAdapter
-        }
+        val adapter = RepoAdapter(requireContext())
+        binding.rvRepos.adapter = adapter
+        adapter.setRepoList(mockRepoList)
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    companion object {
-        const val SPAN_COUNT = 2
     }
 
 }
