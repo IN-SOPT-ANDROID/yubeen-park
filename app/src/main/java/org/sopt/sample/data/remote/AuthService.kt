@@ -1,10 +1,15 @@
 package org.sopt.sample.data.remote
 
+import okhttp3.MultipartBody
+import org.sopt.sample.data.remote.request.RequestLogin
+import org.sopt.sample.data.remote.request.RequestSignup
+import org.sopt.sample.data.remote.response.ResponseLogin
+import org.sopt.sample.data.remote.response.ResponseSignup
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface AuthService {
+
     @POST("api/user/signup")
     fun signup(
         @Body request: RequestSignup
@@ -14,4 +19,11 @@ interface AuthService {
     fun login(
         @Body request: RequestLogin
     ): Call<ResponseLogin>
+
+    @Multipart
+    @POST("api/user/{userId}/image")
+    fun uploadProfileImage(
+        @Path("userId") userId: Int,
+        @Part("image") image: MultipartBody.Part
+    ): Call<Unit>
 }

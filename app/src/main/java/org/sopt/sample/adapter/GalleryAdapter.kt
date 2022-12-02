@@ -5,13 +5,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.response.ResponseUserList
+import org.sopt.sample.data.remote.response.ResponseUser
 import org.sopt.sample.databinding.LayoutGalleryRowBinding
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
-    private var userItems: List<ResponseUserList.userListInfo>? = emptyList()
+    private var userItems: List<ResponseUser.userListInfo>? = emptyList()
 
-    fun setItems(items: List<ResponseUserList.userListInfo>) {
+    fun setItems(items: List<ResponseUser.userListInfo>) {
         this.userItems = items
         notifyDataSetChanged()
     }
@@ -19,7 +19,7 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() 
     class GalleryViewHolder(
         private val binding: LayoutGalleryRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: ResponseUserList.userListInfo) {
+        fun bind(user: ResponseUser.userListInfo) {
             binding.tvFirstName.text = user.first_name
             binding.tvEmail.text = user.email
             Glide.with(binding.root).load(user.avatar).error(R.drawable.github)

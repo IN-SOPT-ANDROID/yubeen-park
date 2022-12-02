@@ -3,7 +3,7 @@ package org.sopt.sample.data.remote.response
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ResponseUserList(
+data class ResponseUser(
     val page: Int,
     val per_page: Int,
     val total: Int,

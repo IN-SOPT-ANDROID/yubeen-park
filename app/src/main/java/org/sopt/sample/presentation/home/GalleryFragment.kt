@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.data.remote.response.ResponseUserList
+import org.sopt.sample.data.remote.response.ResponseUser
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.databinding.FragmentGalleryBinding
 import retrofit2.Call
@@ -41,10 +41,10 @@ class GalleryFragment : Fragment() {
     }
 
     private fun initUserInfo() {
-        userListService.getUserList().enqueue(object : Callback<ResponseUserList> {
+        userListService.getUserList().enqueue(object : Callback<ResponseUser> {
             override fun onResponse(
-                call: Call<ResponseUserList>,
-                response: Response<ResponseUserList>
+                call: Call<ResponseUser>,
+                response: Response<ResponseUser>
             ) {
                 if (response.isSuccessful) {
                     response.body()?.let {
@@ -55,7 +55,7 @@ class GalleryFragment : Fragment() {
 
             }
 
-            override fun onFailure(call: Call<ResponseUserList>, t: Throwable) {
+            override fun onFailure(call: Call<ResponseUser>, t: Throwable) {
                 Log.e("Gallery FAIL", "mes : " + t.message)
             }
         })

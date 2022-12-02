@@ -13,9 +13,9 @@ import org.sopt.sample.databinding.ActivitySignUpBinding
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private var check_et_email: String = ""
-    private var check_et_pw: String = ""
-    private var check_et_name: String = ""
+    private var checkEtEmail: String = ""
+    private var checkEtPw: String = ""
+    private var checkEtName: String = ""
     private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,9 +66,11 @@ class SignUpActivity : AppCompatActivity() {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            check_et_pw = binding.etPw.text.toString()
+            checkEtPw = binding.etPw.text.toString()
+            checkEtEmail = binding.etEmail.text.toString()
+            checkEtName = binding.etName.text.toString()
             binding.btnSignupFinish.isEnabled =
-                check_et_email.isNotEmpty() && check_et_name.isNotEmpty() && check_et_pw.isNotEmpty()
+                checkEtEmail.isNotEmpty() && checkEtName.isNotEmpty() && checkEtPw.isNotEmpty()
         }
 
         override fun afterTextChanged(p0: Editable?) {}

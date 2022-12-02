@@ -39,7 +39,7 @@ class LoginActivity : AppCompatActivity() {
 
     }
 
-    private fun fail_login_toast(errorMessage: String) {
+    private fun failLoginToast(errorMessage: String) {
         Toast.makeText(
             this@LoginActivity,
             errorMessage,
@@ -68,7 +68,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         viewModel.errorMessage.observe(this) {
-            fail_login_toast(it)
+            failLoginToast(it)
         }
     }
 }
