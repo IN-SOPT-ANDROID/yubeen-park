@@ -47,12 +47,12 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.signUpResult.observe(this) {
             when (it) {
-                AuthNetworkState.Success -> {
+                is AuthNetworkState.Success -> {
                     val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                     setResult(RESULT_OK, intent)
                     if (!isFinishing) finish()
                 }
-                AuthNetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
+                is AuthNetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
                 is AuthNetworkState.Error -> failSignupSnackbar(getString(R.string.network_error))
             }
         }

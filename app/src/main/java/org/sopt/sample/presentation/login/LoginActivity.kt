@@ -55,13 +55,11 @@ class LoginActivity : AppCompatActivity() {
         //this->lifeCycleOwner, fragment면 뷰와 생명주기가 달라서->viewLifeCycleOwner제공
         viewModel.loginResult.observe(this) {
             when (it) {
-                AuthNetworkState.Success -> {
-                    binding.etEmail.text = null
-                    binding.etPw.text = null
+                is AuthNetworkState.Success -> {
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                 }
-                AuthNetworkState.Failure -> failLoginSnackbar(getString(R.string.login_error))
+                is AuthNetworkState.Failure -> failLoginSnackbar(getString(R.string.login_error))
                 is AuthNetworkState.Error -> failLoginSnackbar(getString(R.string.network_error))
             }
         }
