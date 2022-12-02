@@ -2,16 +2,16 @@ package org.sopt.sample.presentation.login
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
-import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.R
+import org.sopt.sample.data.remote.AuthNetworkState
 import org.sopt.sample.databinding.ActivityLoginBinding
+import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.signup.SignUpActivity
 
 class LoginActivity : AppCompatActivity() {
@@ -22,28 +22,21 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
-
-
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                Snackbar.make(
-                    binding.root,
-                    getString(R.string.signup_finish),
-                    Snackbar.LENGTH_SHORT
-                ).show()
+                failLoginSnackbar(getString(R.string.signup_finish))
             }
         }
         initListener()
-
     }
 
-    private fun failLoginToast(errorMessage: String) {
-        Toast.makeText(
-            this@LoginActivity,
+    private fun failLoginSnackbar(errorMessage: String) {
+        Snackbar.make(
+            binding.root,
             errorMessage,
-            Toast.LENGTH_SHORT
+            Snackbar.LENGTH_SHORT
         ).show()
     }
 
@@ -61,14 +54,16 @@ class LoginActivity : AppCompatActivity() {
 
         //this->lifeCycleOwner, fragment면 뷰와 생명주기가 달라서->viewLifeCycleOwner제공
         viewModel.loginResult.observe(this) {
-            if (it.status >= 200 && it.status < 300) {
-                val intent = Intent(this@LoginActivity, HomeActivity::class.java)
-                startActivity(intent)
+            when (it) {
+                AuthNetworkState.Success -> {
+                    binding.etEmail.text = null
+                    binding.etPw.text = null
+                    val intent = Intent(this@LoginActivity, HomeActivity::class.java)
+                    startActivity(intent)
+                }
+                AuthNetworkState.Failure -> failLoginSnackbar(getString(R.string.login_error))
+                is AuthNetworkState.Error -> failLoginSnackbar(getString(R.string.network_error))
             }
-        }
-
-        viewModel.errorMessage.observe(this) {
-            failLoginToast(it)
         }
     }
 }

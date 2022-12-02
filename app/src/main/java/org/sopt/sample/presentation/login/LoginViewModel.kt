@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import org.sopt.sample.data.remote.AuthNetworkState
+import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.data.remote.request.RequestLogin
 import org.sopt.sample.data.remote.response.ResponseLogin
-import org.sopt.sample.data.remote.ServicePool
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -14,12 +15,9 @@ import retrofit2.Response
 class LoginViewModel : ViewModel() {
 
     //backing Property
-    private val _loginResult = MutableLiveData<ResponseLogin>()
-    val loginResult: LiveData<ResponseLogin>
+    private val _loginResult = MutableLiveData<AuthNetworkState>()
+    val loginResult: LiveData<AuthNetworkState>
         get() = _loginResult
-    private val _errorMessage = MutableLiveData<String>()
-    val errorMessage : LiveData<String>
-        get() = _errorMessage
     private val loginService = ServicePool.authService
 
     fun login(email: String, pw: String) {
@@ -34,17 +32,15 @@ class LoginViewModel : ViewModel() {
                 response: Response<ResponseLogin>
             ) {
                 if (response.isSuccessful) {
-                    _loginResult.value = response.body()
-//                    binding.etEmail.text = null
-//                    binding.etPw.text = null
+                    _loginResult.value = AuthNetworkState.Success
                 } else {
-                    //fail_login_toast()
+                    _loginResult.value = AuthNetworkState.Failure
                 }
 
             }
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                _errorMessage.value = "네트워크 상태가 불안정합니다."
+                _loginResult.value = AuthNetworkState.Error(t)
                 Log.e("SIGN IN FAIL", "mes : " + t.message)
             }
         })

@@ -4,11 +4,13 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import org.sopt.sample.presentation.login.LoginActivity
+import com.google.android.material.snackbar.Snackbar
+import org.sopt.sample.R
+import org.sopt.sample.data.remote.AuthNetworkState
 import org.sopt.sample.databinding.ActivitySignUpBinding
+import org.sopt.sample.presentation.login.LoginActivity
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -44,25 +46,27 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         viewModel.signUpResult.observe(this) {
-            if (it.status >= 200 && it.status < 300) {
-                val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
-                setResult(AppCompatActivity.RESULT_OK, intent)
-                if (!isFinishing) finish()
+            when (it) {
+                AuthNetworkState.Success -> {
+                    val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
+                    setResult(RESULT_OK, intent)
+                    if (!isFinishing) finish()
+                }
+                AuthNetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
+                is AuthNetworkState.Error -> failSignupSnackbar(getString(R.string.network_error))
             }
-        }
-        viewModel.errorMessage.observe(this) {
-            fail_signUp_toast(it)
         }
     }
 
-    private fun fail_signUp_toast(errorMessage: String) {
-        Toast.makeText(
-            this@SignUpActivity,
+    private fun failSignupSnackbar(errorMessage: String) {
+        Snackbar.make(
+            binding.root,
             errorMessage,
-            Toast.LENGTH_SHORT
+            Snackbar.LENGTH_SHORT
         ).show()
     }
-    private val textWatcher = object : TextWatcher{
+
+    private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
 
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
