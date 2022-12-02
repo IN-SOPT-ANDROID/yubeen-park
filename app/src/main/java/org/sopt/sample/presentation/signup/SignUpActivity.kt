@@ -2,15 +2,12 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.AuthNetworkState
+import org.sopt.sample.data.remote.NetworkState
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.login.LoginActivity
 
@@ -39,13 +36,13 @@ class SignUpActivity : AppCompatActivity() {
 
         viewModel.signUpResult.observe(this) {
             when (it) {
-                is AuthNetworkState.Success -> {
+                is NetworkState.Success -> {
                     val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                     setResult(RESULT_OK, intent)
                     if (!isFinishing) finish()
                 }
-                is AuthNetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
-                is AuthNetworkState.Error -> failSignupSnackbar(getString(R.string.network_error))
+                is NetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
+                is NetworkState.Error -> failSignupSnackbar(getString(R.string.network_error))
             }
         }
     }

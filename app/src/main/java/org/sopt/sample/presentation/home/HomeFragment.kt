@@ -1,19 +1,17 @@
 package org.sopt.sample.presentation.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
+import org.sopt.sample.R
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.data.remote.ServicePool
-import org.sopt.sample.data.remote.response.ResponseUser
+import org.sopt.sample.data.remote.NetworkState
 import org.sopt.sample.databinding.FragmentHomeBinding
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class HomeFragment : Fragment() {
 
@@ -21,10 +19,10 @@ class HomeFragment : Fragment() {
     private val binding: FragmentHomeBinding
         get() = requireNotNull(_binding)
 
+    private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var gridManager: GridLayoutManager
     private lateinit var galleryAdapter: GalleryAdapter
-    private val userListService = ServicePool.userListService
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,24 +39,26 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUserInfo() {
-        userListService.getUserList().enqueue(object : Callback<ResponseUser> {
-            override fun onResponse(
-                call: Call<ResponseUser>,
-                response: Response<ResponseUser>
-            ) {
-                if (response.isSuccessful) {
-                    response.body()?.let {
-                        galleryAdapter.setItems(it.data)
+        viewModel.getUser()
+        viewModel.userResult.observe(requireActivity()) {
+            when (it) {
+                is NetworkState.Success -> {
+                    viewModel.userList.value?.let {
+                        galleryAdapter.setItems(it)
                     }
-
                 }
-
+                is NetworkState.Failure -> failUserSnackbar("예상치 못한 오류가 발생했습니다.")
+                is NetworkState.Error -> failUserSnackbar(getString(R.string.network_error))
             }
+        }
+    }
 
-            override fun onFailure(call: Call<ResponseUser>, t: Throwable) {
-                Log.e("Gallery FAIL", "mes : " + t.message)
-            }
-        })
+    private fun failUserSnackbar(errorMessage: String) {
+        Snackbar.make(
+            binding.root,
+            errorMessage,
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 
     private fun initRecyclerView() {

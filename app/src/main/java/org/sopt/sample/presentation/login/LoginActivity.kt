@@ -6,11 +6,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.AuthNetworkState
+import org.sopt.sample.data.remote.NetworkState
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.signup.SignUpActivity
@@ -58,12 +57,12 @@ class LoginActivity : AppCompatActivity() {
         //this->lifeCycleOwner, fragment면 뷰와 생명주기가 달라서->viewLifeCycleOwner제공
         viewModel.loginResult.observe(this) {
             when (it) {
-                is AuthNetworkState.Success -> {
+                is NetworkState.Success -> {
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                 }
-                is AuthNetworkState.Failure -> failLoginSnackbar(getString(R.string.login_error))
-                is AuthNetworkState.Error -> failLoginSnackbar(getString(R.string.network_error))
+                is NetworkState.Failure -> failLoginSnackbar(getString(R.string.login_error))
+                is NetworkState.Error -> failLoginSnackbar(getString(R.string.network_error))
             }
         }
     }

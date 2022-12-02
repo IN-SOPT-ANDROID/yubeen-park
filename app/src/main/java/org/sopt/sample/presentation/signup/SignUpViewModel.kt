@@ -5,7 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import org.sopt.sample.data.remote.AuthNetworkState
+import org.sopt.sample.data.remote.NetworkState
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.data.remote.request.RequestSignup
 import org.sopt.sample.data.remote.response.ResponseSignup
@@ -14,8 +14,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class SignUpViewModel : ViewModel() {
-    private val _signUpResult = MutableLiveData<AuthNetworkState>()
-    val signUpResult: LiveData<AuthNetworkState>
+    private val _signUpResult = MutableLiveData<NetworkState>()
+    val signUpResult: LiveData<NetworkState>
         get() = _signUpResult
 
     private val signUpService = ServicePool.authService
@@ -42,14 +42,14 @@ class SignUpViewModel : ViewModel() {
                 response: Response<ResponseSignup>
             ) {
                 if (response.isSuccessful) {
-                    _signUpResult.value = AuthNetworkState.Success
+                    _signUpResult.value = NetworkState.Success
                 } else {
-                    _signUpResult.value = AuthNetworkState.Failure
+                    _signUpResult.value = NetworkState.Failure
                 }
             }
 
             override fun onFailure(call: Call<ResponseSignup>, t: Throwable) {
-                _signUpResult.value = AuthNetworkState.Error(t)
+                _signUpResult.value = NetworkState.Error(t)
                 Log.e("SIGNUP FAIL", "mes : " + t.message)
 
             }
