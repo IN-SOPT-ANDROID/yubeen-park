@@ -3,15 +3,10 @@ package org.sopt.sample.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import org.sopt.sample.R
 import org.sopt.sample.data.Repo
 import org.sopt.sample.databinding.LayoutGithubRepoBinding
 import org.sopt.sample.databinding.LayoutRecyclerTextBinding
-import org.w3c.dom.Text
-import java.lang.ClassCastException
-import java.lang.RuntimeException
 
 class RepoAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }

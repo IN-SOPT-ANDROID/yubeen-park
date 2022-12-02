@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignUpActivity">
+    tools:context=".presentation.signup.SignUpActivity">
 
 
     <TextView
@@ -20,24 +20,27 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/txt_id_title"
+        android:id="@+id/txt_email_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="24dp"
-        android:text="@string/id"
+        android:text="@string/email"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/txt_signup" />
 
     <EditText
-        android:id="@+id/et_id"
+        android:id="@+id/et_email"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/hint_id"
-        app:layout_constraintTop_toBottomOf="@+id/txt_id_title"
+        android:hint="@string/hint_email"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/txt_email_title"
         tools:layout_editor_absoluteX="40dp" />
 
     <TextView
@@ -49,38 +52,44 @@
         android:text="@string/pw"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_id" />
+        app:layout_constraintTop_toBottomOf="@+id/et_email" />
 
     <EditText
         android:id="@+id/et_pw"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
         android:hint="@string/hint_pw"
         android:inputType="textPassword"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         app:layout_constraintTop_toBottomOf="@+id/txt_pw_title"
         tools:layout_editor_absoluteX="40dp" />
 
     <TextView
-        android:id="@+id/txt_mbti"
+        android:id="@+id/txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
         android:layout_marginTop="40dp"
-        android:text="@string/mbti"
+        android:text="@string/name"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_pw" />
 
     <EditText
-        android:id="@+id/et_mbti"
+        android:id="@+id/et_name"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:hint="@string/hint_mbti"
-        app:layout_constraintTop_toBottomOf="@+id/txt_mbti"
+        android:hint="@string/hint_name"
+        android:background="@drawable/custom_input"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/txt_name"
         tools:layout_editor_absoluteX="40dp" />
 
     <Button
@@ -89,9 +98,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="40dp"
         android:layout_marginTop="20dp"
-        android:text="@string/signup_finish"
+        android:enabled="false"
+        android:text="@string/signup_btn"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_mbti" />
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

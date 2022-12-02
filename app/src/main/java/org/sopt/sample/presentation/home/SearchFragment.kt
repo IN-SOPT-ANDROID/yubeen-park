@@ -1,10 +1,10 @@
-package org.sopt.sample
+package org.sopt.sample.presentation.home
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import org.sopt.sample.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
