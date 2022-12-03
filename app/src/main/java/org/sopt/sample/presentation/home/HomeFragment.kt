@@ -47,7 +47,7 @@ class HomeFragment : Fragment() {
                         galleryAdapter.setItems(it)
                     }
                 }
-                is NetworkState.Failure -> failUserSnackbar("예상치 못한 오류가 발생했습니다.")
+                is NetworkState.Failure -> failUserSnackbar(getString(R.string.unexpected_error))
                 is NetworkState.Error -> failUserSnackbar(getString(R.string.network_error))
             }
         }
