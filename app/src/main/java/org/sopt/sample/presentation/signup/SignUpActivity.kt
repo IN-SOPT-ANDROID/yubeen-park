@@ -22,6 +22,7 @@ class SignUpActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
         initListener()
+        observeResult()
     }
 
     private fun initListener() {
@@ -33,7 +34,9 @@ class SignUpActivity : AppCompatActivity() {
                 binding.etName.text.toString()
             )
         }
+    }
 
+    private fun observeResult() {
         viewModel.signUpResult.observe(this) {
             when (it) {
                 is NetworkState.Success -> {
