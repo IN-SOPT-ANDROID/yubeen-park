@@ -7,12 +7,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.data.remote.NetworkState
 import org.sopt.sample.data.state.UiState
 import org.sopt.sample.databinding.FragmentHomeBinding
+import org.sopt.sample.util.showSnackbar
 
 class HomeFragment : Fragment() {
 
@@ -45,8 +44,14 @@ class HomeFragment : Fragment() {
                 is UiState.Success -> {
                     galleryAdapter.setItems(it.items)
                 }
-                is UiState.Error -> failUserSnackbar(getString(R.string.network_error))
-                is UiState.Empty -> failUserSnackbar(getString(R.string.unexpected_error))
+                is UiState.Error -> binding.root.showSnackbar(
+                    getString(R.string.network_error),
+                    true
+                )
+                is UiState.Empty -> binding.root.showSnackbar(
+                    getString(R.string.unexpected_error),
+                    true
+                )
                 is UiState.Loading -> {
 
                 } // TODO 8주차 과제 때 구현
@@ -55,14 +60,6 @@ class HomeFragment : Fragment() {
                 }
             }
         }
-    }
-
-    private fun failUserSnackbar(errorMessage: String) {
-        Snackbar.make(
-            binding.root,
-            errorMessage,
-            Snackbar.LENGTH_SHORT
-        ).show()
     }
 
     private fun initRecyclerView() {

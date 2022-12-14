@@ -5,10 +5,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import org.sopt.sample.data.remote.NetworkState
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.data.remote.request.RequestSignup
 import org.sopt.sample.data.remote.response.ResponseSignup
+import org.sopt.sample.data.state.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

@@ -5,11 +5,11 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.NetworkState
+import org.sopt.sample.data.state.NetworkState
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.login.LoginActivity
+import org.sopt.sample.util.showSnackbar
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -41,18 +41,15 @@ class SignUpActivity : AppCompatActivity() {
                     setResult(RESULT_OK, intent)
                     if (!isFinishing) finish()
                 }
-                is NetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
-                is NetworkState.Error -> failSignupSnackbar(getString(R.string.network_error))
+                is NetworkState.Failure -> binding.root.showSnackbar(
+                    getString(R.string.signup_error),
+                    true
+                )
+                is NetworkState.Error -> binding.root.showSnackbar(
+                    getString(R.string.network_error),
+                    true
+                )
             }
         }
     }
-
-    private fun failSignupSnackbar(errorMessage: String) {
-        Snackbar.make(
-            binding.root,
-            errorMessage,
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
 }

@@ -1,7 +1,7 @@
-package org.sopt.sample.data.remote
+package org.sopt.sample.data.state
 
 sealed class NetworkState {
     object Success : NetworkState()
     object Failure : NetworkState()
-    class Error(val e: Throwable) : NetworkState()
+    data class Error(val e: Throwable) : NetworkState()
 }

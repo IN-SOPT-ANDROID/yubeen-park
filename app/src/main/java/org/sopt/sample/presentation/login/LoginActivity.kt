@@ -7,12 +7,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.NetworkState
+import org.sopt.sample.data.state.NetworkState
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.signup.SignUpActivity
+import org.sopt.sample.util.showSnackbar
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -26,20 +26,11 @@ class LoginActivity : AppCompatActivity() {
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
             if (result.resultCode == RESULT_OK) {
-                failLoginSnackbar(getString(R.string.signup_finish))
+                binding.root.showSnackbar(getString(R.string.signup_finish), true)
             }
         }
         initListener()
-    }
-
-    private fun failLoginSnackbar(errorMessage: String) {
-        Snackbar.make(
-            binding.root,
-            errorMessage,
-            Snackbar.LENGTH_SHORT
-        ).apply {
-            anchorView = binding.btnLogin
-        }.show()
+        observeResult()
     }
 
     private fun initListener() {
@@ -53,7 +44,9 @@ class LoginActivity : AppCompatActivity() {
                 binding.etPw.text.toString()
             )
         }
+    }
 
+    private fun observeResult() {
         //this->lifeCycleOwner, fragment면 뷰와 생명주기가 달라서->viewLifeCycleOwner제공
         viewModel.loginResult.observe(this) {
             when (it) {
@@ -61,8 +54,14 @@ class LoginActivity : AppCompatActivity() {
                     val intent = Intent(this@LoginActivity, HomeActivity::class.java)
                     startActivity(intent)
                 }
-                is NetworkState.Failure -> failLoginSnackbar(getString(R.string.login_error))
-                is NetworkState.Error -> failLoginSnackbar(getString(R.string.network_error))
+                is NetworkState.Failure -> binding.root.showSnackbar(
+                    getString(R.string.login_error),
+                    true
+                )
+                is NetworkState.Error -> binding.root.showSnackbar(
+                    getString(R.string.network_error),
+                    true
+                )
             }
         }
     }
