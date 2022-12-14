@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             errorMessage,
             Snackbar.LENGTH_SHORT
         ).apply {
-            anchorView = binding.etPw
+            anchorView = binding.btnLogin
         }.show()
     }
 

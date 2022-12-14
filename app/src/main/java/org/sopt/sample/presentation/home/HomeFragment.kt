@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import org.sopt.sample.R
 import org.sopt.sample.adapter.GalleryAdapter
 import org.sopt.sample.data.remote.NetworkState
+import org.sopt.sample.data.state.UiState
 import org.sopt.sample.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -21,7 +22,6 @@ class HomeFragment : Fragment() {
 
     private val viewModel by viewModels<HomeViewModel>()
 
-    private lateinit var gridManager: GridLayoutManager
     private lateinit var galleryAdapter: GalleryAdapter
 
     override fun onCreateView(
@@ -35,20 +35,24 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
-        initUserInfo()
+        observeEvent()
     }
 
-    private fun initUserInfo() {
+    private fun observeEvent() {
         viewModel.getUser()
         viewModel.userResult.observe(requireActivity()) {
             when (it) {
-                is NetworkState.Success -> {
-                    viewModel.userList.value?.let {
-                        galleryAdapter.setItems(it)
-                    }
+                is UiState.Success -> {
+                    galleryAdapter.setItems(it.items)
                 }
-                is NetworkState.Failure -> failUserSnackbar(getString(R.string.unexpected_error))
-                is NetworkState.Error -> failUserSnackbar(getString(R.string.network_error))
+                is UiState.Error -> failUserSnackbar(getString(R.string.network_error))
+                is UiState.Empty -> failUserSnackbar(getString(R.string.unexpected_error))
+                is UiState.Loading -> {
+
+                } // TODO 8주차 과제 때 구현
+                else -> {
+                    //TODO 8주차 과제
+                }
             }
         }
     }
@@ -62,7 +66,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecyclerView() {
-        gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
+        var gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
         galleryAdapter = GalleryAdapter()
         binding.rvGallery.apply {
             layoutManager = gridManager
