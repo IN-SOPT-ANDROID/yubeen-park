@@ -57,10 +57,10 @@ class SignUpViewModel : ViewModel() {
     }
 
     private fun emailRegex(email: String): Boolean {
-        return email.matches("^(?=.*[a-z])(?=.*[0-9])[0-9A-Za-z$&+?@#<>^*%!]{6,10}$".toRegex())
+        return email.matches("^(?=.*[a-zA-Z])(?=.*[0-9]).{6,10}$".toRegex())
     }
 
     private fun passwordRegex(password: String): Boolean {
-        return password.matches("^(?=.*[a-z])(?=.*[0-9])(?=.*[$&+?@#<>^*%!])[0-9A-Za-z$&+?@#<>^*%!]{6,12}$".toRegex())
+        return password.matches("^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[$&+?@#<>^*%!]).{6,12}$".toRegex())
     }
 }
