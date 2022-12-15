@@ -9,7 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import org.sopt.sample.R
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.data.state.UiState
+import org.sopt.sample.util.state.UiState
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.util.showSnackbar
 
@@ -55,9 +55,7 @@ class HomeFragment : Fragment() {
                 is UiState.Loading -> {
 
                 } // TODO 8주차 과제 때 구현
-                else -> {
-                    //TODO 8주차 과제
-                }
+                UiState.Init -> TODO()
             }
         }
     }

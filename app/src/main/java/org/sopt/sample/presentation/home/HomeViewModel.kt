@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.data.remote.response.ResponseUser
-import org.sopt.sample.data.state.UiState
+import org.sopt.sample.util.state.UiState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -39,7 +39,7 @@ class HomeViewModel : ViewModel() {
                         _userResult.value = UiState.Success(it.data)
                     }
                 } else {
-                    _userResult.value = UiState.Empty(true)
+                    _userResult.value = UiState.Empty
                 }
 
             }
