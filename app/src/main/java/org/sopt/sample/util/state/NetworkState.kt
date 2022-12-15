@@ -1,4 +1,4 @@
-package org.sopt.sample.data.state
+package org.sopt.sample.util.state
 
 sealed class NetworkState {
     object Success : NetworkState()
