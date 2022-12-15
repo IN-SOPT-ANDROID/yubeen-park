@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import org.sopt.sample.data.remote.ServicePool
 import org.sopt.sample.data.remote.request.RequestLogin
 import org.sopt.sample.data.remote.response.ResponseLogin
-import org.sopt.sample.data.state.NetworkState
+import org.sopt.sample.util.state.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

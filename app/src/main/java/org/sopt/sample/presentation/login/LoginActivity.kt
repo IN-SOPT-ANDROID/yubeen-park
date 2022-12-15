@@ -8,7 +8,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.sopt.sample.R
-import org.sopt.sample.data.state.NetworkState
+import org.sopt.sample.util.state.NetworkState
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.signup.SignUpActivity
