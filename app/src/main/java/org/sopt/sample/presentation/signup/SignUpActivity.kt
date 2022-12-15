@@ -2,14 +2,15 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import org.sopt.sample.R
-import org.sopt.sample.data.state.NetworkState
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.util.showSnackbar
+import org.sopt.sample.util.state.NetworkState
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -37,6 +38,26 @@ class SignUpActivity : AppCompatActivity() {
     }
 
     private fun observeResult() {
+        viewModel.emailFlag.observe(this) {
+            Log.i("emailFlag", it.toString())
+            Log.i("emailCheck", binding.layoutEtEmail.isErrorEnabled.toString())
+            if (it) {//이메일 양식이 맞을 때
+                binding.layoutEtEmail.error = null
+                binding.layoutEtEmail.isErrorEnabled = false
+            } else {
+                binding.layoutEtEmail.error = getString(R.string.signup_email_error)
+            }
+        }
+
+        viewModel.pwFlag.observe(this) {
+            if (it) {//이메일 양식이 맞을 때
+                binding.layoutEtPw.error = null
+                binding.layoutEtPw.isErrorEnabled = false
+            } else {
+                binding.layoutEtPw.error = getString(R.string.signup_pw_error)
+            }
+        }
+
         viewModel.signUpResult.observe(this) {
             when (it) {
                 is NetworkState.Success -> {
@@ -55,4 +76,5 @@ class SignUpActivity : AppCompatActivity() {
             }
         }
     }
+
 }

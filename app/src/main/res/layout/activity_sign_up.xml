@@ -4,10 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="org.sopt.sample.presentation.signup.SignUpViewModel" />
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,72 +41,89 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/txt_signup" />
 
-        <EditText
-            android:id="@+id/et_email"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_et_email"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/custom_input"
-            android:hint="@string/hint_email"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:textColor="@{viewModel.emailFlag ? @color/light_sky_blue : @color/red}"
-            android:text="@={viewModel.userEmail}"
-            app:layout_constraintTop_toBottomOf="@+id/txt_email_title"
-            tools:layout_editor_absoluteX="40dp" />
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="10"
+            app:layout_constraintTop_toBottomOf="@+id/txt_email_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_email"
+                android:inputType="text"
+                android:text="@={viewModel.userEmail}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
             android:id="@+id/txt_pw_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/pw"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_email" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_email" />
 
-        <EditText
-            android:id="@+id/et_pw"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_et_pw"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/custom_input"
-            android:hint="@string/hint_pw"
-            android:inputType="textPassword"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="@={viewModel.userPassword}"
-            android:textColor="@{viewModel.pwFlag ? @color/light_sky_blue : @color/red}"
-            app:layout_constraintTop_toBottomOf="@+id/txt_pw_title"
-            tools:layout_editor_absoluteX="40dp" />
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            app:counterEnabled="true"
+            app:counterMaxLength="12"
+            app:layout_constraintTop_toBottomOf="@+id/txt_pw_title">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_pw"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_pw"
+                android:inputType="textPassword"
+                android:text="@={viewModel.userPassword}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
 
         <TextView
             android:id="@+id/txt_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="@string/name"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_pw" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_pw" />
 
-        <EditText
-            android:id="@+id/et_name"
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_et_name"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginHorizontal="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:background="@drawable/custom_input"
-            android:hint="@string/hint_name"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:text="@={viewModel.userName}"
-            app:layout_constraintTop_toBottomOf="@+id/txt_name"
-            tools:layout_editor_absoluteX="40dp" />
+            android:paddingStart="40dp"
+            android:paddingEnd="40dp"
+            app:layout_constraintTop_toBottomOf="@+id/txt_name">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_name"
+                android:inputType="text"
+                android:text="@={viewModel.userName}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <Button
             android:id="@+id/btn_signup_finish"
@@ -118,31 +137,7 @@
             android:text="@string/signup_btn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_name" />
-
-        <TextView
-            android:id="@+id/tv_email_warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:text="@string/signup_email_error"
-            android:textColor="@color/red"
-            android:textSize="10sp"
-            android:visibility="@{viewModel.emailFlag ? View.GONE : View.VISIBLE, default=gone}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_email" />
-
-        <TextView
-            android:id="@+id/tv_pw_warning"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="40dp"
-            android:text="@string/signup_pw_error"
-            android:textColor="@color/red"
-            android:textSize="10sp"
-            android:visibility="@{viewModel.pwFlag ? View.GONE : View.VISIBLE, default=gone}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/et_pw" />
+            app:layout_constraintTop_toBottomOf="@+id/layout_et_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
