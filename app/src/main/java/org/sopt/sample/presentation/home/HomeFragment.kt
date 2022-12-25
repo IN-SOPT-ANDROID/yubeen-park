@@ -9,9 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
 import org.sopt.sample.R
 import org.sopt.sample.adapter.GalleryAdapter
-import org.sopt.sample.util.state.UiState
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.util.showSnackbar
+import org.sopt.sample.util.state.UiState
 
 class HomeFragment : Fragment() {
 
@@ -22,6 +22,7 @@ class HomeFragment : Fragment() {
     private val viewModel by viewModels<HomeViewModel>()
 
     private lateinit var galleryAdapter: GalleryAdapter
+    private lateinit var dialog: LoadingDialog
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,25 +44,32 @@ class HomeFragment : Fragment() {
             when (it) {
                 is UiState.Success -> {
                     galleryAdapter.setItems(it.items)
+                    dialog.dismiss()
                 }
-                is UiState.Error -> binding.root.showSnackbar(
-                    getString(R.string.network_error),
-                    true
-                )
-                is UiState.Empty -> binding.root.showSnackbar(
-                    getString(R.string.unexpected_error),
-                    true
-                )
+                is UiState.Error -> {
+                    dialog.dismiss()
+                    binding.root.showSnackbar(
+                        getString(R.string.network_error),
+                        true
+                    )
+                }
+                is UiState.Empty -> {
+                    dialog.dismiss()
+                    binding.root.showSnackbar(
+                        getString(R.string.unexpected_error),
+                        true
+                    )
+                }
                 is UiState.Loading -> {
-
-                } // TODO 8주차 과제 때 구현
-                UiState.Init -> TODO()
+                    dialog = LoadingDialog(requireContext())
+                    dialog.show()
+                }
             }
         }
     }
 
     private fun initRecyclerView() {
-        var gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
+        val gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
         galleryAdapter = GalleryAdapter()
         binding.rvGallery.apply {
             layoutManager = gridManager

@@ -14,26 +14,18 @@ import retrofit2.Response
 class HomeViewModel : ViewModel() {
 
     private val userService = ServicePool.userListService
-    private val _userResult: MutableLiveData<UiState<List<ResponseUser.userListInfo>>> =
-        MutableLiveData(UiState.Init)
+    private val _userResult = MutableLiveData<UiState<List<ResponseUser.userListInfo>>>()
     val userResult: LiveData<UiState<List<ResponseUser.userListInfo>>>
         get() = _userResult
 
-//    private val _userList = MutableLiveData<List<ResponseUser.userListInfo>>()
-//    val userList: LiveData<List<ResponseUser.userListInfo>>
-//        get() = _userList
-
-    init {
-        _userResult.value = UiState.Loading(true)
-    }
 
     fun getUser() {
+        _userResult.value = UiState.Loading
         userService.getUserList().enqueue(object : Callback<ResponseUser> {
             override fun onResponse(
                 call: Call<ResponseUser>,
                 response: Response<ResponseUser>
             ) {
-                _userResult.value = UiState.Loading(false)
                 if (response.isSuccessful) {
                     response.body()?.let {
                         _userResult.value = UiState.Success(it.data)
@@ -45,7 +37,6 @@ class HomeViewModel : ViewModel() {
             }
 
             override fun onFailure(call: Call<ResponseUser>, t: Throwable) {
-                _userResult.value = UiState.Loading(false)
                 _userResult.value = UiState.Error(t.toString())
                 Log.e("Gallery FAIL", "mes : " + t.message)
             }
