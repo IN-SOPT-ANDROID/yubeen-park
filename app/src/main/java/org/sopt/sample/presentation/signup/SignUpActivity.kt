@@ -2,40 +2,31 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
+import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
+import androidx.databinding.DataBindingUtil
 import org.sopt.sample.R
-import org.sopt.sample.data.remote.AuthNetworkState
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.login.LoginActivity
+import org.sopt.sample.util.showSnackbar
+import org.sopt.sample.util.state.NetworkState
 
 class SignUpActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySignUpBinding
-    private var checkEtEmail: String = ""
-    private var checkEtPw: String = ""
-    private var checkEtName: String = ""
     private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignUpBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
+        binding.lifecycleOwner = this
+        binding.viewModel = viewModel
         initListener()
-
+        observeResult()
     }
 
     private fun initListener() {
-        //모든 입력창에 입력값이 있는 경우에만 버튼 활성화
-        binding.etEmail.addTextChangedListener(textWatcher)
-        binding.etName.addTextChangedListener(textWatcher)
-        binding.etPw.addTextChangedListener(textWatcher)
-
-
         //서버통신
         binding.btnSignupFinish.setOnClickListener {
             viewModel.signUp(
@@ -44,39 +35,46 @@ class SignUpActivity : AppCompatActivity() {
                 binding.etName.text.toString()
             )
         }
+    }
+
+    private fun observeResult() {
+        viewModel.emailFlag.observe(this) {
+            Log.i("emailFlag", it.toString())
+            Log.i("emailCheck", binding.layoutEtEmail.isErrorEnabled.toString())
+            if (it) {//이메일 양식이 맞을 때
+                binding.layoutEtEmail.error = null
+                binding.layoutEtEmail.isErrorEnabled = false
+            } else {
+                binding.layoutEtEmail.error = getString(R.string.signup_email_error)
+            }
+        }
+
+        viewModel.pwFlag.observe(this) {
+            if (it) {//이메일 양식이 맞을 때
+                binding.layoutEtPw.error = null
+                binding.layoutEtPw.isErrorEnabled = false
+            } else {
+                binding.layoutEtPw.error = getString(R.string.signup_pw_error)
+            }
+        }
 
         viewModel.signUpResult.observe(this) {
             when (it) {
-                is AuthNetworkState.Success -> {
+                is NetworkState.Success -> {
                     val intent = Intent(this@SignUpActivity, LoginActivity::class.java)
                     setResult(RESULT_OK, intent)
                     if (!isFinishing) finish()
                 }
-                is AuthNetworkState.Failure -> failSignupSnackbar(getString(R.string.signup_error))
-                is AuthNetworkState.Error -> failSignupSnackbar(getString(R.string.network_error))
+                is NetworkState.Failure -> binding.root.showSnackbar(
+                    getString(R.string.signup_error),
+                    true
+                )
+                is NetworkState.Error -> binding.root.showSnackbar(
+                    getString(R.string.network_error),
+                    true
+                )
             }
         }
     }
 
-    private fun failSignupSnackbar(errorMessage: String) {
-        Snackbar.make(
-            binding.root,
-            errorMessage,
-            Snackbar.LENGTH_SHORT
-        ).show()
-    }
-
-    private val textWatcher = object : TextWatcher {
-        override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-
-        override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            checkEtPw = binding.etPw.text.toString()
-            checkEtEmail = binding.etEmail.text.toString()
-            checkEtName = binding.etName.text.toString()
-            binding.btnSignupFinish.isEnabled =
-                checkEtEmail.isNotEmpty() && checkEtName.isNotEmpty() && checkEtPw.isNotEmpty()
-        }
-
-        override fun afterTextChanged(p0: Editable?) {}
-    }
 }
