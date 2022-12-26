@@ -4,30 +4,26 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import org.sopt.sample.R
+import org.sopt.sample.base.BindingActivity
 import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.util.showSnackbar
 import org.sopt.sample.util.state.NetworkState
 
-class SignUpActivity : AppCompatActivity() {
+class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
-    private lateinit var binding: ActivitySignUpBinding
     private val viewModel by viewModels<SignUpViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         binding.lifecycleOwner = this
         binding.viewModel = viewModel
-        initListener()
-        observeResult()
+        addListeners()
+        addObservers()
     }
 
-    private fun initListener() {
-        //서버통신
+    private fun addListeners() {
         binding.btnSignupFinish.setOnClickListener {
             viewModel.signUp(
                 binding.etEmail.text.toString(),
@@ -37,7 +33,7 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeResult() {
+    private fun addObservers() {
         viewModel.emailFlag.observe(this) {
             Log.i("emailFlag", it.toString())
             Log.i("emailCheck", binding.layoutEtEmail.isErrorEnabled.toString())

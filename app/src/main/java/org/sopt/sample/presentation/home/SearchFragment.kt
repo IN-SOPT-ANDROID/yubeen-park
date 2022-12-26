@@ -1,29 +1,9 @@
 package org.sopt.sample.presentation.home
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
+import org.sopt.sample.R
+import org.sopt.sample.base.BindingFragment
 import org.sopt.sample.databinding.FragmentSearchBinding
 
-class SearchFragment : Fragment() {
-
-    private var _binding: FragmentSearchBinding? = null
-    private val binding: FragmentSearchBinding
-        get() = requireNotNull(_binding)
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+class SearchFragment : BindingFragment<FragmentSearchBinding>(R.layout.fragment_search) {
 
 }
