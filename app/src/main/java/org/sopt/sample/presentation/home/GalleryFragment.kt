@@ -3,10 +3,10 @@ package org.sopt.sample.presentation.home
 import android.os.Bundle
 import android.view.View
 import org.sopt.sample.R
-import org.sopt.sample.adapter.RepoAdapter
 import org.sopt.sample.base.BindingFragment
 import org.sopt.sample.data.Repo
 import org.sopt.sample.databinding.FragmentGalleryBinding
+import org.sopt.sample.presentation.home.adapter.GalleryAdapter
 
 
 class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragment_gallery) {
@@ -68,7 +68,7 @@ class GalleryFragment : BindingFragment<FragmentGalleryBinding>(R.layout.fragmen
     }
 
     private fun initLayout() {
-        val adapter = RepoAdapter(requireContext())
+        val adapter = GalleryAdapter(requireContext())
         binding.rvRepos.adapter = adapter
         adapter.setRepoList(mockRepoList)
     }

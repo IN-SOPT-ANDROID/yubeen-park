@@ -4,9 +4,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.GridLayoutManager
-import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
-import org.sopt.sample.adapter.GalleryAdapter
+import org.sopt.sample.adapter.RepoAdapter
 import org.sopt.sample.base.BindingFragment
 import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.util.showSnackbar
@@ -17,7 +16,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private val viewModel by viewModels<HomeViewModel>()
 
-    private lateinit var galleryAdapter: GalleryAdapter
+    private lateinit var galleryAdapter: RepoAdapter
     private lateinit var dialog: LoadingDialog
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,7 +27,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
 
     private fun initLayout() {
         val gridManager = GridLayoutManager(requireContext(), SPAN_COUNT)
-        galleryAdapter = GalleryAdapter()
+        galleryAdapter = RepoAdapter()
         binding.rvGallery.apply {
             layoutManager = gridManager
             adapter = galleryAdapter
