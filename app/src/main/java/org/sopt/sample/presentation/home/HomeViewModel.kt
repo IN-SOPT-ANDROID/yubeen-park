@@ -14,8 +14,8 @@ import timber.log.Timber
 class HomeViewModel : ViewModel() {
 
     private val userService = ServicePool.userListService
-    private val _userResult = MutableLiveData<UiState<List<ResponseUser.userListInfo>>>()
-    val userResult: LiveData<UiState<List<ResponseUser.userListInfo>>>
+    private val _userResult = MutableLiveData<UiState<List<ResponseUser.UserListInfo>>>()
+    val userResult: LiveData<UiState<List<ResponseUser.UserListInfo>>>
         get() = _userResult
 
 

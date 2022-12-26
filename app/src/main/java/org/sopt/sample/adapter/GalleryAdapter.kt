@@ -9,9 +9,9 @@ import org.sopt.sample.data.remote.response.ResponseUser
 import org.sopt.sample.databinding.LayoutGalleryRowBinding
 
 class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() {
-    private var userItems: List<ResponseUser.userListInfo>? = emptyList()
+    private var userItems: List<ResponseUser.UserListInfo>? = emptyList()
 
-    fun setItems(items: List<ResponseUser.userListInfo>) {
+    fun setItems(items: List<ResponseUser.UserListInfo>) {
         this.userItems = items
         notifyDataSetChanged()
     }
@@ -19,8 +19,8 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() 
     class GalleryViewHolder(
         private val binding: LayoutGalleryRowBinding
     ) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(user: ResponseUser.userListInfo) {
-            binding.tvFirstName.text = user.first_name
+        fun bind(user: ResponseUser.UserListInfo) {
+            binding.tvFirstName.text = user.firstName
             binding.tvEmail.text = user.email
             Glide.with(binding.root).load(user.avatar).error(R.drawable.github)
                 .into(binding.ivAvatar)
