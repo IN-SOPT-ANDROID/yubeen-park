@@ -1,6 +1,5 @@
 package org.sopt.sample.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,6 +10,7 @@ import org.sopt.sample.util.state.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class LoginViewModel : ViewModel() {
 
@@ -41,7 +41,7 @@ class LoginViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
                 _loginResult.value = NetworkState.Error(t)
-                Log.e("SIGN IN FAIL", "mes : " + t.message)
+                Timber.tag("SIGN IN FAIL").e("mes : " + t.message)
             }
         })
     }

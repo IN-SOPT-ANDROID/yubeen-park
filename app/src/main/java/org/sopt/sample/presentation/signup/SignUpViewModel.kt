@@ -1,6 +1,5 @@
 package org.sopt.sample.presentation.signup
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -12,6 +11,7 @@ import org.sopt.sample.util.state.NetworkState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class SignUpViewModel : ViewModel() {
     private val _signUpResult = MutableLiveData<NetworkState>()
@@ -50,7 +50,7 @@ class SignUpViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseSignup>, t: Throwable) {
                 _signUpResult.value = NetworkState.Error(t)
-                Log.e("SIGNUP FAIL", "mes : " + t.message)
+                Timber.tag("SIGNUP FAIL").e("mes : " + t.message)
 
             }
         })

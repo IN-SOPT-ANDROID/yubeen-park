@@ -2,7 +2,6 @@ package org.sopt.sample.presentation.signup
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import org.sopt.sample.R
 import org.sopt.sample.base.BindingActivity
@@ -10,6 +9,7 @@ import org.sopt.sample.databinding.ActivitySignUpBinding
 import org.sopt.sample.presentation.login.LoginActivity
 import org.sopt.sample.util.showSnackbar
 import org.sopt.sample.util.state.NetworkState
+import timber.log.Timber
 
 class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_sign_up) {
 
@@ -35,8 +35,8 @@ class SignUpActivity : BindingActivity<ActivitySignUpBinding>(R.layout.activity_
 
     private fun addObservers() {
         viewModel.emailFlag.observe(this) {
-            Log.i("emailFlag", it.toString())
-            Log.i("emailCheck", binding.layoutEtEmail.isErrorEnabled.toString())
+            Timber.i("emailFlag : $it")
+            Timber.i("emailCheck : " + binding.layoutEtEmail.isErrorEnabled.toString())
             if (it) {//이메일 양식이 맞을 때
                 binding.layoutEtEmail.error = null
                 binding.layoutEtEmail.isErrorEnabled = false

@@ -1,6 +1,5 @@
 package org.sopt.sample.presentation.home
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -10,6 +9,7 @@ import org.sopt.sample.util.state.UiState
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import timber.log.Timber
 
 class HomeViewModel : ViewModel() {
 
@@ -38,7 +38,7 @@ class HomeViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseUser>, t: Throwable) {
                 _userResult.value = UiState.Error(t.toString())
-                Log.e("Gallery FAIL", "mes : " + t.message)
+                Timber.tag("Gallery FAIL").e("mes : " + t.message)
             }
 
         })
