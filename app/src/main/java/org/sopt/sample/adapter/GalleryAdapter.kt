@@ -3,7 +3,8 @@ package org.sopt.sample.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
+import coil.load
+import coil.transform.CircleCropTransformation
 import org.sopt.sample.R
 import org.sopt.sample.data.remote.response.ResponseUser
 import org.sopt.sample.databinding.LayoutGalleryRowBinding
@@ -22,8 +23,10 @@ class GalleryAdapter : RecyclerView.Adapter<GalleryAdapter.GalleryViewHolder>() 
         fun bind(user: ResponseUser.UserListInfo) {
             binding.tvFirstName.text = user.firstName
             binding.tvEmail.text = user.email
-            Glide.with(binding.root).load(user.avatar).error(R.drawable.github)
-                .into(binding.ivAvatar)
+            binding.ivAvatar.load(user.avatar) {
+                transformations(CircleCropTransformation())
+                error(R.drawable.github)
+            }
         }
     }
 

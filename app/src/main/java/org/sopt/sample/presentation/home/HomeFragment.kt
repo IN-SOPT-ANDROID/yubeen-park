@@ -12,7 +12,7 @@ import org.sopt.sample.databinding.FragmentHomeBinding
 import org.sopt.sample.util.showSnackbar
 import org.sopt.sample.util.state.UiState
 
-@AndroidEntryPoint
+
 class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home) {
 
     private val viewModel by viewModels<HomeViewModel>()

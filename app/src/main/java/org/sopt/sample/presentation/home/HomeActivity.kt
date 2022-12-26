@@ -2,12 +2,10 @@ package org.sopt.sample.presentation.home
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.R
 import org.sopt.sample.base.BindingActivity
 import org.sopt.sample.databinding.ActivityHomeBinding
 
-@AndroidEntryPoint
 class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home) {
 
     override fun onCreate(savedInstanceState: Bundle?) {

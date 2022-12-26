@@ -16,7 +16,7 @@ class RepoAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
         private val binding: LayoutGithubRepoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onRepoBind(data: Repo) {
-            binding.imgGithub.setImageDrawable(binding.root.context.getDrawable(data.image))
+            with(binding) { imgGithub.setImageDrawable(root.context.getDrawable(data.image)) }
             binding.txtGithubRepoName.text = data.name
             binding.txtGithubRepoAuthor.text = data.author
         }
