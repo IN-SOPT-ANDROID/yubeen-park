@@ -5,6 +5,7 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
+import dagger.hilt.android.AndroidEntryPoint
 import org.sopt.sample.BuildConfig
 import org.sopt.sample.R
 import org.sopt.sample.base.BindingActivity
@@ -15,6 +16,7 @@ import org.sopt.sample.util.showSnackbar
 import org.sopt.sample.util.state.NetworkState
 import timber.log.Timber
 
+@AndroidEntryPoint
 class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private val viewModel by viewModels<LoginViewModel>()
@@ -27,9 +29,6 @@ class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_lo
             if (result.resultCode == RESULT_OK) {
                 binding.root.showSnackbar(getString(R.string.signup_finish), true)
             }
-        }
-        if(BuildConfig.DEBUG){
-            Timber.plant(Timber.DebugTree())
         }
         addListeners()
         addObservers()
