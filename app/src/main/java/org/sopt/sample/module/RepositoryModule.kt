@@ -1,7 +1,7 @@
 package org.sopt.sample.module
 
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.sopt.sample.data.remote.AuthService
@@ -13,7 +13,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RepositoryModule {
     @Singleton
-    @Provides
+    @Binds
     fun bindsAuthRepository(apiInterface: AuthService): AuthRepository {
         return AuthRepositoryImpl(apiInterface)
     }
