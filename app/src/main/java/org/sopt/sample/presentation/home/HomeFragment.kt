@@ -39,7 +39,7 @@ class HomeFragment : BindingFragment<FragmentHomeBinding>(R.layout.fragment_home
         viewModel.userResult.observe(requireActivity()) {
             when (it) {
                 is UiState.Success -> {
-                    galleryAdapter.setItems(it.items)
+                    galleryAdapter.submitList(it.items)
                     dialog.dismiss()
                 }
                 is UiState.Error -> {
