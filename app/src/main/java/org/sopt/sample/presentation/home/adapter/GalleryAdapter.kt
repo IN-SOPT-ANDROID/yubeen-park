@@ -4,6 +4,9 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
+import org.sopt.sample.R
 import org.sopt.sample.data.Repo
 import org.sopt.sample.databinding.LayoutGithubRepoBinding
 import org.sopt.sample.databinding.LayoutRecyclerTextBinding
@@ -16,7 +19,10 @@ class GalleryAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewH
         private val binding: LayoutGithubRepoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onRepoBind(data: Repo) {
-            with(binding) { imgGithub.setImageDrawable(root.context.getDrawable(data.image)) }
+            binding.imgGithub.load(data.image) {
+                transformations(CircleCropTransformation())
+                error(R.drawable.github)
+            }
             binding.txtGithubRepoName.text = data.name
             binding.txtGithubRepoAuthor.text = data.author
         }
