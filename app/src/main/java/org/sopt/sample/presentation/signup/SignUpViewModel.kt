@@ -50,7 +50,7 @@ class SignUpViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseSignup>, t: Throwable) {
                 _signUpResult.value = NetworkState.Error(t)
-                Timber.tag("SIGNUP FAIL").e("mes : " + t.message)
+                Timber.e("mes : " + t.message)
 
             }
         })

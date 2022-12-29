@@ -38,7 +38,7 @@ class HomeViewModel : ViewModel() {
 
             override fun onFailure(call: Call<ResponseUser>, t: Throwable) {
                 _userResult.value = UiState.Error(t.toString())
-                Timber.tag("Gallery FAIL").e("mes : " + t.message)
+                Timber.e("mes : " + t.message)
             }
 
         })

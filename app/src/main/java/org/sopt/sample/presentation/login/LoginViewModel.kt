@@ -29,7 +29,7 @@ class LoginViewModel @Inject constructor(
                     _loginResult.value = NetworkState.Success
                 }.onFailure {
                     _loginResult.value = NetworkState.Failure
-                    Timber.tag("SIGN IN FAIL").e("mes : " + it.message)
+                    Timber.e("mes : " + it.message)
                 }
 
         }
