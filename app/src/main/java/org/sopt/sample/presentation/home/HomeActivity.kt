@@ -25,7 +25,7 @@ class HomeActivity : BindingActivity<ActivityHomeBinding>(R.layout.activity_home
         val targetFragment = getFragment(menuItemId)
 
         supportFragmentManager.beginTransaction()
-            .replace(R.id.home_container, targetFragment) // navigation 클릭시 Fragment 매번 새로 생성됨
+            .replace(R.id.fcv_home, targetFragment) // navigation 클릭시 Fragment 매번 새로 생성됨
             .commitAllowingStateLoss()
     }
 
