@@ -1,22 +1,28 @@
-package org.sopt.sample.adapter
+package org.sopt.sample.presentation.home.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import coil.load
+import coil.transform.CircleCropTransformation
+import org.sopt.sample.R
 import org.sopt.sample.data.Repo
 import org.sopt.sample.databinding.LayoutGithubRepoBinding
 import org.sopt.sample.databinding.LayoutRecyclerTextBinding
 
-class RepoAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class GalleryAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val inflater by lazy { LayoutInflater.from(context) }
     private var repoList: List<Repo> = emptyList()
 
-    class RepoViewHolder(
+    class GalleryViewHolder(
         private val binding: LayoutGithubRepoBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun onRepoBind(data: Repo) {
-            binding.imgGithub.setImageDrawable(binding.root.context.getDrawable(data.image))
+            binding.imgGithub.load(data.image) {
+                transformations(CircleCropTransformation())
+                error(R.drawable.github)
+            }
             binding.txtGithubRepoName.text = data.name
             binding.txtGithubRepoAuthor.text = data.author
         }
@@ -40,7 +46,7 @@ class RepoAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
             }
             Repo.REPO_TYPE -> {
                 val binding = LayoutGithubRepoBinding.inflate(inflater, parent, false)
-                RepoViewHolder(binding)
+                GalleryViewHolder(binding)
             }
             else -> {
                 throw ClassCastException("Unknown viewType Error")
@@ -55,7 +61,7 @@ class RepoAdapter(context: Context) : RecyclerView.Adapter<RecyclerView.ViewHold
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (repoList[position].type) {
             Repo.REPO_TYPE -> {
-                (holder as RepoViewHolder).onRepoBind(repoList[position])
+                (holder as GalleryViewHolder).onRepoBind(repoList[position])
             }
             Repo.TEXT_TYPE -> {
                 (holder as TextViewHolder).onTextBind(repoList[position])

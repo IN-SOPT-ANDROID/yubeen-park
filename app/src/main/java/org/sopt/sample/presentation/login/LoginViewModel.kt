@@ -1,48 +1,37 @@
 package org.sopt.sample.presentation.login
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import org.sopt.sample.data.remote.ServicePool
+import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.sopt.sample.data.remote.request.RequestLogin
-import org.sopt.sample.data.remote.response.ResponseLogin
+import org.sopt.sample.repositories.AuthRepository
 import org.sopt.sample.util.state.NetworkState
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import timber.log.Timber
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     //backing Property
     private val _loginResult = MutableLiveData<NetworkState>()
     val loginResult: LiveData<NetworkState>
         get() = _loginResult
-    private val loginService = ServicePool.authService
 
     fun login(email: String, pw: String) {
-        loginService.login(
-            RequestLogin(
-                email,
-                pw
-            )
-        ).enqueue(object : Callback<ResponseLogin> {
-            override fun onResponse(
-                call: Call<ResponseLogin>,
-                response: Response<ResponseLogin>
-            ) {
-                if (response.isSuccessful) {
+        viewModelScope.launch {
+            authRepository.login(RequestLogin(email, pw))
+                .onSuccess {
                     _loginResult.value = NetworkState.Success
-                } else {
+                }.onFailure {
                     _loginResult.value = NetworkState.Failure
+                    Timber.e("mes : " + it.message)
                 }
 
-            }
-
-            override fun onFailure(call: Call<ResponseLogin>, t: Throwable) {
-                _loginResult.value = NetworkState.Error(t)
-                Log.e("SIGN IN FAIL", "mes : " + t.message)
-            }
-        })
+        }
     }
 }

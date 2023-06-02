@@ -5,23 +5,24 @@ import android.os.Bundle
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
+import dagger.hilt.android.AndroidEntryPoint
+import org.sopt.sample.BuildConfig
 import org.sopt.sample.R
-import org.sopt.sample.util.state.NetworkState
+import org.sopt.sample.base.BindingActivity
 import org.sopt.sample.databinding.ActivityLoginBinding
 import org.sopt.sample.presentation.home.HomeActivity
 import org.sopt.sample.presentation.signup.SignUpActivity
 import org.sopt.sample.util.showSnackbar
+import org.sopt.sample.util.state.NetworkState
+import timber.log.Timber
 
-class LoginActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityLoginBinding
+@AndroidEntryPoint
+class LoginActivity : BindingActivity<ActivityLoginBinding>(R.layout.activity_login) {
     private lateinit var resultLauncher: ActivityResultLauncher<Intent>
     private val viewModel by viewModels<LoginViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         resultLauncher = registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
         ) { result ->
@@ -29,11 +30,11 @@ class LoginActivity : AppCompatActivity() {
                 binding.root.showSnackbar(getString(R.string.signup_finish), true)
             }
         }
-        initListener()
-        observeResult()
+        addListeners()
+        addObservers()
     }
 
-    private fun initListener() {
+    private fun addListeners() {
         binding.btnSignup.setOnClickListener {
             val intent = Intent(this, SignUpActivity::class.java)
             resultLauncher.launch(intent)
@@ -46,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun observeResult() {
+    private fun addObservers() {
         //this->lifeCycleOwner, fragment면 뷰와 생명주기가 달라서->viewLifeCycleOwner제공
         viewModel.loginResult.observe(this) {
             when (it) {

@@ -16,9 +16,9 @@ interface AuthService {
     ): Call<ResponseSignup>
 
     @POST("api/user/signin")
-    fun login(
+    suspend fun login(
         @Body request: RequestLogin
-    ): Call<ResponseLogin>
+    ): ResponseLogin
 
     @Multipart
     @POST("api/user/{userId}/image")
